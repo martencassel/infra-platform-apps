@@ -1,0 +1,38 @@
+controller:
+  admissionWebhooks:
+    patch:
+      image:
+        registry: registry.k8s.io
+        image: ingress-nginx/kube-webhook-certgen
+  opentelemetry:
+    image:
+      registry: registry.k8s.io
+      image: ingress-nginx/opentelemetry-1.25.3
+  image:
+    registry: registry.k8s.io
+    image: ingress-nginx/controller
+  replicaCount: 2
+  service:
+    type: NodePort
+    nodePorts:
+      http: 32080
+      https: 32443
+    allowSnippetAnnotations: true
+    metrics:
+      port: 10254
+      portName: metrics
+      enabled: false
+      serviceMonitor:
+        enabled: false
+        additionalLabels:
+          release: kube-prometheus-stack
+    resources:
+      limits:
+        cpu: 999m
+        memory: 500Mi
+      requests:
+        cpu: 20m
+        memory: 100Mi
+tags: nginx
+
+
