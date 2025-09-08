@@ -6,4 +6,13 @@ metadata:
 spec:
   project: default
   source:
-    repoURL:
+    repoURL: https://github.com/martencassel/infra-platform-apps.git
+    path: apps
+    targetRevision: main
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
